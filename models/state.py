@@ -5,6 +5,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, backref
 from os import getenv
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -20,13 +21,12 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
-    from models.city import City
-    if models.storage_type != 'db':
+    if models.storage_t == 'db':
         @property
         def cities(self):
-            """ Returns the list of City"""
-            the_cities = []
-            for c in models.storage.all(City).values():
-                if c.state_id == self.id:
-                    the_cities.append(c)
-            return the_cities
+            """getter attribute cities that returns the list of City instances"""
+            city_list = []
+            for city in list(models.storage.all(City).values()):
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
