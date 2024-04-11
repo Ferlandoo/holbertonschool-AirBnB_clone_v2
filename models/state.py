@@ -4,7 +4,6 @@ import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, backref
-from models.city import City
 from os import getenv
 
 
@@ -21,6 +20,7 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
+    from models.city import City
     if models.storage_type != 'db':
         @property
         def cities(self):
