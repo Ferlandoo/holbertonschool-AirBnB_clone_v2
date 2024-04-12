@@ -17,8 +17,9 @@ def teardown_data(self):
 @app.route('/states_list', strict_slashes=False)
 def states_list():
     """ return all states in the db  """
-    states = storage.all(State)
-    return render_template('7-states_list.html', states=states)
+    states = storage.all(State).values()
+    sorted_states = sorted(states, key=lambda state: state.name)
+    return render_template('7-states_list.html', states=sorted_states)
 
 
 if __name__ == '__main__':
